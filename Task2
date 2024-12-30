@@ -1,0 +1,39 @@
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY,
+    Title VARCHAR(255),
+    Author VARCHAR(255),
+    Available BOOLEAN
+);
+CREATE TABLE Members (
+    MemberID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    DateOfBirth DATE,
+    Phone VARCHAR(15)
+);
+CREATE TABLE Transactions (
+    TransactionID INT PRIMARY KEY,
+    BookID INT,
+    MemberID INT,
+    BorrowDate DATE,
+    ReturnDate DATE,
+    FOREIGN KEY (BookID) REFERENCES Books(BookID),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+INSERT INTO Books (BookID, Title, Author, Available)
+VALUES (1, 'The Great Gatsby', 'F. Scott Fitzgerald', TRUE);
+INSERT INTO Members (MemberID, FirstName, LastName, DateOfBirth,Phone)
+VALUES (1, 'John', 'Doe', '1990-01-15', '123-456-7890');
+INSERT INTO Transactions (TransactionID, BookID, MemberID, BorrowDate, ReturnDate)
+VALUES (1, 1, 1, '2024-12-01', NULL);
+UPDATE Books
+SET Available = FALSE
+WHERE BookID = 1;
+DELETE FROM Members
+WHERE MemberID = 1;
+SELECT * FROM Books;
+SELECT * FROM Members;
+SELECT * FROM Transactions;
+SELECT Members.FirstName, Members.LastName, Books.Title, Transactions.BorrowDate, Transactions.ReturnDate FROM Transactions
+JOIN Members ON Transactions.MemberID = Members.MemberID
+JOIN Books ON Transactions.BookID = Books.BookID;
